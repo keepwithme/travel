@@ -11,7 +11,6 @@
     </group>
 
     <group android:id="@+id/guest_menu">
-
         <item
             android:id="@+id/login"
             android:icon="@drawable/ic_login_black_24dp"
