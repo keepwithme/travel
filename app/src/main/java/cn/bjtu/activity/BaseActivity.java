@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 
 import cn.bjtu.R;
 import cn.bjtu.manager.UserManager;
+import cn.bmob.v3.BmobUser;
 
 
 public class BaseActivity extends AppCompatActivity
@@ -72,8 +73,15 @@ public class BaseActivity extends AppCompatActivity
             case R.id.reg:
                 startActivity(new Intent(this,RegActivity.class));
                 break;
-            case R.id.logout:
+            case R.id.login:
+                startActivity(new Intent(this,AccountLoginActivity.class));
+                break;
+            case R.id.password:
 
+                break;
+            case R.id.logout:
+                BmobUser.logOut();
+                android.os.Process.killProcess(android.os.Process.myPid());
                 break;
         }
         //隐藏抽屉菜单

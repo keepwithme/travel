@@ -44,7 +44,10 @@ public class UserManager extends BaseManager {
      * @param user 登录用户，包含账号与密码
      * @return
      */
-    public Observable<User> login(User user) {
+    public Observable<User> login(String phone ,String password) {
+        User user=new User();
+        user.setMobilePhoneNumber(phone);
+        user.setPassword(password);
         return user.loginObservable(User.class);
     }
 
@@ -55,7 +58,7 @@ public class UserManager extends BaseManager {
      * @param smsCode
      * @return
      */
-    public Observable<User> loginByMobile(final String phone, final String smsCode) {
+    public Observable<User> loginBySMS( final String phone, final String smsCode) {
 
         //转换为Observable对象，方便使用RxJava处理
         return Observable.create(new Observable.OnSubscribe<User>() {

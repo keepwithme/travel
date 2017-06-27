@@ -8,6 +8,10 @@
             android:id="@+id/logout"
             android:icon="@drawable/ic_logout_black_24dp"
             android:title="退出"/>
+        <item
+            android:id="@+id/password"
+            android:icon="@drawable/ic_vpn_key_black_24dp"
+            android:title="更改密码"/>
     </group>
 
     <group android:id="@+id/guest_menu">
