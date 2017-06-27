@@ -60,7 +60,7 @@ public class AccountLoginActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.login) {
             String phone = mEtPhone.getText().toString();
-            String password = mEtPhone.getText().toString();
+            String password = mEtPassword.getText().toString();
             if (!TextUtil.isPhone(phone)) {
                 DialogUtil.snackbar(mToolbar, "手机号码格式错误");
                 return true;
@@ -70,6 +70,7 @@ public class AccountLoginActivity extends BaseActivity {
                 return true;
             }
             DialogUtil.createProgressDialog(this);
+            TextUtil.closeKeybord(this);
             mUserManager.login(phone, password)
                     .subscribe(new DefaultSubscriber<User>() {
                         @Override

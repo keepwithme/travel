@@ -5,13 +5,31 @@
         android:id="@+id/login_menu"
         android:visible="false">
         <item
-            android:id="@+id/logout"
-            android:icon="@drawable/ic_logout_black_24dp"
-            android:title="退出"/>
+            android:id="@+id/concern"
+            android:icon="@drawable/ic_visibility_black_24dp"
+            android:title="关注"/>
+        <item
+            android:id="@+id/favrite"
+            android:icon="@drawable/ic_fav_black_24dp"
+            android:title="收藏"/>
+        <item
+            android:id="@+id/route"
+            android:icon="@drawable/ic_route_black_24dp"
+            android:title="路线"/>
+        <item
+            android:id="@+id/sign"
+            android:icon="@drawable/ic_sign_black_24dp"
+            android:title="签到"/>
+
         <item
             android:id="@+id/password"
             android:icon="@drawable/ic_vpn_key_black_24dp"
-            android:title="更改密码"/>
+            android:title="密码"/>
+
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_logout_black_24dp"
+            android:title="退出"/>
     </group>
 
     <group android:id="@+id/guest_menu">

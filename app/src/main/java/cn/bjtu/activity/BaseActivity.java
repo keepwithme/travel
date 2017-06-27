@@ -22,15 +22,15 @@ import cn.bmob.v3.BmobUser;
 
 public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    protected UserManager mUserManager=UserManager.getInstance();
+    protected UserManager mUserManager = UserManager.getInstance();
     private NavigationView mNavigationView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+
         super.onCreate(savedInstanceState, persistentState);
 
     }
-
 
 
     @Override
@@ -71,13 +71,13 @@ public class BaseActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case R.id.reg:
-                startActivity(new Intent(this,RegActivity.class));
+                startActivity(new Intent(this, RegActivity.class));
                 break;
             case R.id.login:
-                startActivity(new Intent(this,AccountLoginActivity.class));
+                startActivity(new Intent(this, AccountLoginActivity.class));
                 break;
             case R.id.password:
-
+                startActivity(new Intent(this, PasswordActivity.class));
                 break;
             case R.id.logout:
                 BmobUser.logOut();

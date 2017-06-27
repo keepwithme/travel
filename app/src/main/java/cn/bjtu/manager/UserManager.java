@@ -5,6 +5,7 @@ import cn.bmob.v3.BmobSMS;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
+import cn.bmob.v3.listener.UpdateListener;
 import rx.Observable;
 import rx.Subscriber;
 
@@ -45,10 +46,7 @@ public class UserManager extends BaseManager {
      * @return
      */
     public Observable<User> login(String phone ,String password) {
-        User user=new User();
-        user.setMobilePhoneNumber(phone);
-        user.setPassword(password);
-        return user.loginObservable(User.class);
+        return BmobUser.loginByAccountObservable(User.class,phone,password);
     }
 
     /**
@@ -75,8 +73,35 @@ public class UserManager extends BaseManager {
         });
     }
 
+    /**
+     * 请求短信验证码，发送到指定号码的手机上
+     * @param phone
+     */
     public void requestSmsCode(String phone) {
         BmobSMS.requestSMSCodeObservable(phone, "one")
                 .subscribe();
     }
+
+    /**
+     * 更改当前登录用户的密码。
+     * 将回调接口转换为Observable为难点
+     * @param passwordOld
+     * @param passwordNew
+     * @return
+     */
+    public Observable<Void>  updatePassword(final String passwordOld, final String passwordNew){
+       return  Observable.create(new Observable.OnSubscribe<Void>() {
+           @Override
+           public void call(final Subscriber<? super Void> subscriber) {
+                BmobUser.updateCurrentUserPassword(passwordOld, passwordNew, new UpdateListener() {
+                    @Override
+                    public void done(BmobException e) {
+                        if(e==null) subscriber.onNext(null);
+                        else subscriber.onError(e);
+                    }
+                });
+           }
+       });
+    }
+
 }
