@@ -8,7 +8,6 @@ import butterknife.ButterKnife;
 import cn.bjtu.R;
 
 public class MainActivity extends BaseActivity {
-
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 

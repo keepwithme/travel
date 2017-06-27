@@ -25,6 +25,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <!-- 访问精良位置 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -33,7 +34,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -50,5 +50,9 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="uQeRUXFlCYoPtdHL4bifwuozyRKDPNuG"/>
+
+        <activity android:name=".activity.RegActivity">
+        </activity>
     </application>
+
 </manifest>

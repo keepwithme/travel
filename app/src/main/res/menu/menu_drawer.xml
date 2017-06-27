@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<!-- 菜单分为两组，未登录菜单与已登录菜单,根据登录状态显示或隐藏-->
+    <!-- 菜单分为两组，未登录菜单与已登录菜单,根据登录状态显示或隐藏-->
     <group
         android:id="@+id/login_menu"
         android:visible="false">
@@ -11,6 +11,10 @@
     </group>
 
     <group android:id="@+id/guest_menu">
+        <item
+            android:id="@+id/reg"
+            android:icon="@drawable/ic_person_add_black_24dp"
+            android:title="注册"/>
         <item
             android:id="@+id/login"
             android:icon="@drawable/ic_login_black_24dp"

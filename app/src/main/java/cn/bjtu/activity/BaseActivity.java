@@ -1,5 +1,6 @@
 package cn.bjtu.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.LayoutRes;
@@ -14,29 +15,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import cn.bjtu.R;
-import cn.bjtu.event.LoginEvent;
+import cn.bjtu.manager.UserManager;
 
 
 public class BaseActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    protected UserManager mUserManager=UserManager.getInstance();
     private NavigationView mNavigationView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-        EventBus.getDefault().register(this);
+
     }
 
-    @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
-    }
+
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -46,7 +40,6 @@ public class BaseActivity extends AppCompatActivity
         View view = getLayoutInflater().inflate(layoutResID, frameLayout, true);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         if (toolbar != null) {
-            // DrawerLayout drawer = (DrawerLayout) drawerLayout.findViewById(R.id.drawer_layout);
             setSupportActionBar(toolbar);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -55,6 +48,8 @@ public class BaseActivity extends AppCompatActivity
         }
         mNavigationView = (NavigationView) drawerLayout.findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+        mNavigationView.getMenu().setGroupVisible(R.id.login_menu, mUserManager.isLogined());
+        mNavigationView.getMenu().setGroupVisible(R.id.guest_menu, !mUserManager.isLogined());
         super.setContentView(drawerLayout);
     }
 
@@ -74,8 +69,8 @@ public class BaseActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.login:
-
+            case R.id.reg:
+                startActivity(new Intent(this,RegActivity.class));
                 break;
             case R.id.logout:
 
@@ -87,9 +82,5 @@ public class BaseActivity extends AppCompatActivity
         return true;
     }
 
-    @Subscribe
-    public void onLogin(LoginEvent event) {
-        mNavigationView.getMenu().setGroupVisible(R.id.login_menu, event.logined);
-        mNavigationView.getMenu().setGroupVisible(R.id.guest_menu, !event.logined);
-    }
+
 }
