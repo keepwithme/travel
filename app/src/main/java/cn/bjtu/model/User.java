@@ -53,4 +53,5 @@ public class User extends BmobUser {
     public void setAge(Integer age) {
         this.age = age;
     }
+
 }

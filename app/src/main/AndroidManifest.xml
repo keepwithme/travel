@@ -53,6 +53,8 @@
 
         <activity android:name=".activity.RegActivity">
         </activity>
+        <activity android:name=".activity.AccountLoginActivity">
+        </activity>
     </application>
 
 </manifest>

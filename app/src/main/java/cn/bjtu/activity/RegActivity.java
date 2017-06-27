@@ -13,12 +13,14 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import cn.bjtu.R;
 import cn.bjtu.manager.UserManager;
 import cn.bjtu.model.User;
 import cn.bjtu.util.CountDownView;
 import cn.bjtu.util.DefaultSubscriber;
 import cn.bjtu.util.DialogUtil;
+import cn.bjtu.util.TextUtil;
 
 public class RegActivity extends BaseActivity {
 
@@ -67,8 +69,17 @@ public class RegActivity extends BaseActivity {
     @OnClick(R.id.btn_code)
     public void onViewClick() {
         mTimer.start();
-       UserManager.getInstance()
-               .requestSmsCode(mEtPhone.getText().toString());
+        mUserManager.requestSmsCode(mEtPhone.getText().toString());
+    }
+
+    /**
+     * 手机号输入框文字发生改变时调用
+     *
+     * @param
+     */
+    @OnTextChanged(value = {R.id.et_phone}, callback = OnTextChanged.Callback.TEXT_CHANGED)
+    public void onPhoneTextChanged(CharSequence s) {
+        mBtnCode.setEnabled(TextUtil.isPhone(s.toString()));
     }
 
     @Override
@@ -83,22 +94,32 @@ public class RegActivity extends BaseActivity {
             User user = new User();
             user.setUsername(mEtUsername.getText().toString());
             user.setMobilePhoneNumber(mEtPhone.getText().toString());
-            user.setPassword(mEtPassword.getText().toString());
+            String password = mEtPassword.getText().toString();
+            user.setPassword(password);
             String smsCode = mEtCode.getText().toString();
+            //输入无效
+            if (TextUtil.isEmpty(user.getUsername()) ||
+                    TextUtil.isEmpty(smsCode) ||
+                    TextUtil.isEmpty(password) ||
+                    !TextUtil.isPhone(user.getMobilePhoneNumber())) {
+                DialogUtil.snackbar(mToolbar, "输入错误");
+                return true;
+            }
             UserManager.getInstance()
                     .signOrLogin(user, smsCode)
                     .subscribe(new DefaultSubscriber<User>() {
                         //注册成功，切换到主页
                         @Override
                         public void onNext(User user) {
-                            UserManager.getInstance().setUser(user);
+                            mUserManager.setUser(user);
                             startActivity(new Intent(RegActivity.this, MainActivity.class));
                             finish();
                         }
+
                         @Override
                         public void onError(Throwable throwable) {
                             super.onError(throwable);
-                          DialogUtil.snackbar(mToolbar, "验证码错误，注册失败");
+                            DialogUtil.snackbar(mToolbar, "验证码错误，注册失败");
                         }
                     });
         }
